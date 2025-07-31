@@ -1,7 +1,24 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import Pagination from '@mui/material/Pagination';
+import PaginationItem from '@mui/material/PaginationItem';
+import Box from '@mui/material/Box';
+import { styled } from '@mui/material/styles';
 
-import './Pager.css';
+// Use Material UI's styled API for better style isolation
+const StyledPagination = styled(Pagination)(() => ({
+  margin: '1em auto',
+  '& .MuiPaginationItem-root': {
+    color: '#0078d4',
+  },
+  '& .MuiPaginationItem-page.Mui-selected': {
+    backgroundColor: '#0078d4',
+    color: 'white',
+    '&:hover': {
+      backgroundColor: '#106ebe',
+    }
+  }
+}));
 
 // Constants
 const PAGE_WINDOW = 2; // Pages to show before and after the current page
@@ -33,106 +50,15 @@ export default function Pager(props) {
         }
     }
 
-    // Handler for next page button click
-    function handleNextPage() {
-        if (page < totalPages) {
-            handlePageChange(page + 1);
-        }
-    }
+    // With Material UI's Pagination component, we don't need the custom logic for
+    // next/previous page navigation or calculating page windows, as these are 
+    // handled internally by the Pagination component
 
-    // Handler for previous page button click
-    function handlePreviousPage() {
-        if (page > 1) {
-            handlePageChange(page - 1);
-        }
-    }
+    // With Material UI's Pagination component, we don't need to manually render page links
+    // or previous/next buttons, as they're handled by the component itself
     
-    // Calculate page range and memoize to avoid recalculation on every render
-    const { minPage, maxPage } = useMemo(() => {
-        let minPage = Math.max(1, page - PAGE_WINDOW);
-        let maxPage = Math.min(totalPages, page + PAGE_WINDOW);
-        
-        // Adjust range if we're near the start or end
-        // This ensures we always show 5 pages if available
-        if (maxPage - minPage < PAGE_WINDOW * 2) {
-            if (page < totalPages / 2) {
-                // Near start, expand end
-                maxPage = Math.min(totalPages, minPage + PAGE_WINDOW * 2);
-            } else {
-                // Near end, expand start
-                minPage = Math.max(1, maxPage - PAGE_WINDOW * 2);
-            }
-        }
-        
-        return { minPage, maxPage };
-    }, [page, totalPages]);
-
-    // Generate page links array
-    function renderPageLinks() {
-        const links = [];
-        
-        for (let i = minPage; i <= maxPage; i++) {
-            if (i === page) {
-                links.push(
-                    <li className="page-item active" key={i}>
-                        <span className="page-link" aria-current="page">
-                            {i}
-                        </span>
-                    </li>
-                );
-            } else {
-                links.push(
-                    <li className="page-item" key={i}>
-                        <button 
-                            className="page-link" 
-                            onClick={() => handlePageChange(i)}
-                            aria-label={`Go to page ${i}`}>
-                            {i}
-                        </button>
-                    </li>
-                );
-            }
-        }
-        return links;
-    }
-
-    // Create previous button component
-    function renderPreviousButton() {
-        const isFirstPage = page === 1;
-        return (
-            <li className={`page-item ${isFirstPage ? 'disabled' : ''}`} key="prev">
-                {isFirstPage ? (
-                    <span className="page-link">Previous</span>
-                ) : (
-                    <button 
-                        className="page-link" 
-                        onClick={handlePreviousPage} 
-                        aria-label="Go to previous page">
-                        Previous
-                    </button>
-                )}
-            </li>
-        );
-    }
-
-    // Create next button component
-    function renderNextButton() {
-        const isLastPage = page === totalPages;
-        return (
-            <li className={`page-item ${isLastPage ? 'disabled' : ''}`} key="next">
-                {isLastPage ? (
-                    <span className="page-link">Next</span>
-                ) : (
-                    <button 
-                        className="page-link" 
-                        onClick={handleNextPage}
-                        aria-label="Go to next page">
-                        Next
-                    </button>
-                )}
-            </li>
-        );
-    }
+    // We also don't need the page window calculation for rendering since
+    // Material UI's Pagination handles this with siblingCount and boundaryCount props
 
     // Handle case with no results
     if (totalPages <= 0) {
@@ -140,13 +66,39 @@ export default function Pager(props) {
     }
 
     return (
-        <nav aria-label="Search results pagination" className="pager">
-            <ul className="pagination item">
-                {renderPreviousButton()}
-                {renderPageLinks()}
-                {renderNextButton()}
-            </ul>
-        </nav>
+        <Box 
+            component="nav" 
+            aria-label="Search results pagination"
+            sx={{ 
+                margin: 'auto', 
+                display: 'flex', 
+                justifyContent: 'center', 
+                width: '100%',
+                // Reset any Bootstrap styles that might interfere
+                '& ul': {
+                    margin: 0,
+                    padding: 0,
+                    listStyle: 'none'
+                },
+                '& li': {
+                    margin: 0,
+                    padding: 0,
+                    border: 'none'
+                }
+            }}
+        >
+            <StyledPagination
+                page={page}
+                count={totalPages}
+                variant="outlined"
+                shape="rounded"
+                onChange={(event, newPage) => handlePageChange(newPage)}
+                showFirstButton
+                showLastButton
+                siblingCount={PAGE_WINDOW}
+                boundaryCount={1}
+            />
+        </Box>
     );
 }
 

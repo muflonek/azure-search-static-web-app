@@ -1,0 +1,41 @@
+/* MUI isolation styles for auth component */
+.mui-auth-isolation-wrapper {
+  /* Create a new stacking context */
+  position: relative;
+  z-index: 1;
+  
+  /* Reset all external styling */
+  all: initial;
+  box-sizing: border-box;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  
+  /* Display properties */
+  display: block;
+  color: white;
+}
+
+/* Ensure MUI's styling works correctly */
+.mui-auth-isolation-wrapper * {
+  box-sizing: border-box;
+}
+
+/* Reset specific elements that might be affected by other design systems */
+.mui-auth-isolation-wrapper button, 
+.mui-auth-isolation-wrapper a {
+  cursor: pointer !important;
+  text-decoration: none;
+}
+
+/* Ensure MUI's styles are preserved */
+.mui-auth-isolation-wrapper .MuiButton-root {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+.mui-auth-isolation-wrapper .MuiTypography-root {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+/* Ensure buttons look interactive */
+.mui-auth-isolation-wrapper .MuiButton-root:hover {
+  opacity: 0.9;
+}

@@ -1,0 +1,53 @@
+/* MUI Facet Component Isolation Layer */
+.mui-facet-isolation-wrapper {
+  /* CSS Reset */
+  all: initial;
+  
+  /* Box model */
+  box-sizing: border-box;
+  
+  /* Prevent inheritance from Bootstrap */
+  font-family: inherit;
+  line-height: normal;
+  
+  /* Reset lists */
+  list-style: none;
+  
+  /* Reset positioning */
+  position: relative;
+  
+  /* Ensure MUI styles take precedence */
+  & * {
+    box-sizing: border-box;
+  }
+  
+  /* Ensure proper cursor behavior on interactive elements */
+  & [role="button"],
+  & button {
+    cursor: pointer;
+  }
+  
+  /* Reset MUI-specific elements to avoid Bootstrap conflicts */
+  & .MuiCheckbox-root {
+    padding: 9px;
+  }
+  
+  & .MuiListItem-root {
+    padding: 8px 16px;
+  }
+  
+  & .MuiCollapse-root {
+    width: 100%;
+  }
+  
+  & .MuiListItemText-root {
+    margin: 0;
+  }
+  
+  /* Scrollable lists */
+  & .MuiList-root.facet-scrollable {
+    max-height: 340px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+}

@@ -1,0 +1,47 @@
+/* MUI Result Component Isolation Layer */
+.mui-result-isolation-wrapper {
+  /* CSS Reset */
+  all: initial;
+  
+  /* Box model */
+  box-sizing: border-box;
+  
+  /* Prevent inheritance from Bootstrap */
+  font-family: inherit;
+  line-height: normal;
+  color: inherit;
+  
+  /* Reset positioning */
+  position: relative;
+  display: block;
+  
+  /* Ensure MUI styles take precedence */
+  & * {
+    box-sizing: border-box;
+  }
+  
+  /* Remove link styling */
+  & a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  /* MUI specific reset */
+  & .MuiCardMedia-root {
+    object-fit: contain;
+    background-color: #f0f0f0;
+  }
+  
+  & .MuiCardContent-root {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  & .MuiTypography-root {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  }
+}

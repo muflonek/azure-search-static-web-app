@@ -1,0 +1,52 @@
+/* This file creates a CSS isolation boundary to prevent Bootstrap styles
+   from affecting Material UI components inside the header */
+
+.mui-header-isolation-wrapper {
+  /* Create a new stacking context */
+  position: relative;
+  z-index: 1;
+  
+  /* Reset common Bootstrap styles that might affect child elements */
+  all: initial;  /* Reset all properties */
+  box-sizing: border-box;
+  font-family: inherit; /* Restore font */
+  
+  /* Display properties to ensure proper layout */
+  display: block;
+  width: 100%;
+  background-color: #0078d7;
+  color: #fff;
+}
+
+/* Reset Bootstrap styles for common elements */
+.mui-header-isolation-wrapper ul,
+.mui-header-isolation-wrapper li,
+.mui-header-isolation-wrapper a {
+  all: unset;
+  box-sizing: border-box;
+}
+
+/* Ensure buttons have pointer cursor */
+.mui-header-isolation-wrapper button,
+.mui-header-isolation-wrapper a,
+.mui-header-isolation-wrapper .MuiButton-root {
+  cursor: pointer !important;
+}
+
+/* Ensure Material UI's classes work properly */
+.mui-header-isolation-wrapper .MuiToolbar-root,
+.mui-header-isolation-wrapper .MuiAppBar-root {
+  display: flex;
+}
+
+.mui-header-isolation-wrapper .MuiButton-root,
+.mui-header-isolation-wrapper .MuiTypography-root {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+/* Maintain logo styling */
+.mui-header-isolation-wrapper .mui-navbar-logo {
+  height: 1.5em;
+  object-fit: contain;
+  margin-right: 1em;
+}

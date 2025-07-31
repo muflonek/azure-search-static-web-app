@@ -1,0 +1,22 @@
+/* Isolation styles for header auth component */
+.mui-auth-isolation-wrapper {
+  /* Create a new stacking context */
+  position: relative;
+  z-index: 1;
+  
+  /* Reset common Bootstrap styles */
+  box-sizing: border-box;
+  
+  /* Display properties */
+  display: block;
+}
+
+.mui-auth-isolation-wrapper a {
+  color: white;
+  text-decoration: none;
+  margin-left: 8px;
+}
+
+.mui-auth-isolation-wrapper a:hover {
+  text-decoration: underline;
+}

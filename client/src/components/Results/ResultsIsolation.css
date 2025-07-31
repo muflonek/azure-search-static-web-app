@@ -1,0 +1,37 @@
+/* MUI Results Component Isolation Layer */
+.mui-results-isolation-wrapper {
+  /* CSS Reset */
+  all: initial;
+  
+  /* Box model */
+  box-sizing: border-box;
+  
+  /* Prevent inheritance from Bootstrap */
+  font-family: inherit;
+  line-height: normal;
+  color: inherit;
+  
+  /* Reset positioning */
+  position: relative;
+  display: block;
+  
+  /* Ensure MUI styles take precedence */
+  & * {
+    box-sizing: border-box;
+  }
+  
+  /* Results info text */
+  & .MuiTypography-root {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  }
+  
+  /* Results container */
+  & .MuiGrid-container {
+    width: 100%;
+  }
+  
+  /* Make sure strong text is properly bold */
+  & b, & strong {
+    font-weight: 700;
+  }
+}

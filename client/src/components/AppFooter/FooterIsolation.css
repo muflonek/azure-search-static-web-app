@@ -1,0 +1,33 @@
+/* This file creates a CSS isolation boundary to prevent Bootstrap styles
+   from affecting Material UI components inside the footer */
+
+.mui-footer-isolation-wrapper {
+  /* Create a new stacking context */
+  position: relative;
+  z-index: 1;
+  
+  /* Reset common Bootstrap styles that might affect child elements */
+  all: initial;  /* Reset all properties */
+  box-sizing: border-box;
+  font-family: inherit; /* Restore font */
+  
+  /* Display properties to ensure proper layout */
+  display: block;
+  width: 100%;
+  margin-top: 0em;
+  padding: 0%;
+  text-align: center; /* Ensure text is centered */
+}
+
+/* Reset Bootstrap styles for common elements */
+.mui-footer-isolation-wrapper hr,
+.mui-footer-isolation-wrapper p {
+  all: unset;
+  box-sizing: border-box;
+}
+
+/* Ensure Material UI's classes work properly */
+.mui-footer-isolation-wrapper .MuiContainer-root,
+.mui-footer-isolation-wrapper .MuiTypography-root {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}

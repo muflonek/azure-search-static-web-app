@@ -1,7 +1,29 @@
 import React from 'react';
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 import Result from './Result/Result';
 
-import "./Results.css";
+import "./ResultsIsolation.css";
+
+// Styled components for MUI isolation
+const ResultsContainer = styled(Grid)(() => ({
+  display: 'flex',
+  flexFlow: 'row wrap',
+  justifyContent: 'center',
+  width: '100%',
+  margin: 'auto',
+  '& > *': {
+    height: 'auto', // Allow natural height
+    alignSelf: 'stretch' // Make each grid item stretch to fill its cell
+  }
+}));
+
+const ResultsInfo = styled(Typography)(() => ({
+  margin: '1em',
+  fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+}));
 
 export default function Results(props) {
 
@@ -16,11 +38,13 @@ export default function Results(props) {
   let endDocNumber = Math.min(props.skip + props.top, props.count);
 
   return (
-    <div>
-      <p className="results-info">Showing {beginDocNumber}-{endDocNumber} of {props.count.toLocaleString()} results for <b>{props.query}</b></p>
-      <div className="row row-cols-md-5 results">
+    <Box className="mui-results-isolation-wrapper">
+      <ResultsInfo variant="body1">
+        Showing {beginDocNumber}-{endDocNumber} of {props.count.toLocaleString()} results for <strong>{props.query}</strong>
+      </ResultsInfo>
+      <ResultsContainer container spacing={2} justifyContent="center">
         {results}
-      </div>
-    </div>
+      </ResultsContainer>
+    </Box>
   );
 };

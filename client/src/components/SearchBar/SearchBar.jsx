@@ -1,7 +1,74 @@
-import React, { useState, useEffect } from 'react';
-import { TextField, Autocomplete, Button, Box } from '@mui/material';
+import React, { useState, useEffect, useRef } from 'react';
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
 import fetchInstance from '../../url-fetch';
-import './SearchBar.css';
+import './SearchBarIsolation.css';
+
+// Using styled HTML elements instead of MUI components to reduce bundle size
+const SearchContainer = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  margin: '0 auto',
+  width: '100%',
+}));
+
+const SearchBox = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  width: '100%',
+}));
+
+// Custom lightweight autocomplete implementation
+const SearchInput = styled('input')(() => ({
+  width: '100%',
+  padding: '10px 14px',
+  fontSize: '16px',
+  borderRadius: '4px',
+  border: '1px solid #ccc',
+  outline: 'none',
+  '&:focus': {
+    borderColor: '#1976d2',
+    boxShadow: '0 0 0 2px rgba(25, 118, 210, 0.2)'
+  }
+}));
+
+const SuggestionList = styled('ul')(() => ({
+  position: 'absolute',
+  zIndex: 1000,
+  background: 'white',
+  width: '100%',
+  maxHeight: '200px',
+  overflowY: 'auto',
+  borderRadius: '4px',
+  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  margin: 0,
+  padding: 0,
+  listStyle: 'none',
+}));
+
+const SuggestionItem = styled('li')(() => ({
+  padding: '8px 14px',
+  cursor: 'pointer',
+  '&:hover': {
+    backgroundColor: '#f5f5f5'
+  }
+}));
+
+const SearchButton = styled('button')(() => ({
+  marginLeft: '8px',
+  height: '40px',
+  padding: '0 16px',
+  backgroundColor: '#1976d2',
+  color: 'white',
+  border: 'none',
+  borderRadius: '4px',
+  fontWeight: 500,
+  cursor: 'pointer',
+  '&:hover': {
+    backgroundColor: '#1565c0'
+  }
+}));
 
 export default function SearchBar({ postSearchHandler, query, width }) {
   const [q, setQ] = useState(() => query || '');
@@ -13,7 +80,6 @@ export default function SearchBar({ postSearchHandler, query, width }) {
 
   useEffect(() => {
     if (q) {
-
       const body = { q, top: 5, suggester: 'sg' };
 
       fetchInstance('/api/suggest', { body, method: 'POST' })
@@ -24,61 +90,65 @@ export default function SearchBar({ postSearchHandler, query, width }) {
         console.log(error);
         setSuggestions([]);
       });
+    } else {
+      setSuggestions([]);
     }
   }, [q]);
 
-
-  const onInputChangeHandler = (event, value) => {
-    setQ(value);
-  };
-
-
-  const onChangeHandler = (event, value) => {
-
-    setQ(value);
-    search(value);
-  };
-
-  const onEnterButton = (event) => {
-    // if enter key is pressed
+  // Handle enter key in the search field
+  const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       search(q);
     }
   };
 
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const inputRef = useRef(null);
+  
+  // Handle selecting suggestion
+  const handleSuggestionClick = (suggestion) => {
+    setQ(suggestion);
+    search(suggestion);
+    setShowSuggestions(false);
+  };
+
   return (
-    <div
-      className={width ? "search-bar search-bar-wide" : "search-bar search-bar-narrow"}
-    >
-      <Box className="search-bar-box">
-        <Autocomplete
-          className="autocomplete"
-          freeSolo
-          value={q}
-          options={suggestions}
-          onInputChange={onInputChangeHandler}
-          onChange={onChangeHandler}
-          disableClearable
-          renderInput={(params) => (
-            <TextField
-              {...params}
+    <Box className="mui-searchbar-isolation-wrapper" sx={{ width: width || 'auto' }}>
+      <SearchContainer>
+        <SearchBox>
+          <div style={{ position: 'relative', width: '100%' }}>
+            <SearchInput
+              ref={inputRef}
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              onFocus={() => setShowSuggestions(true)}
+              onBlur={() => {
+                // Delay to allow click on suggestion
+                setTimeout(() => setShowSuggestions(false), 200);
+              }}
+              onKeyPress={handleKeyPress}
               id="search-box"
-              className="form-control rounded-0"
               placeholder="What are you looking for?"
-              onBlur={() => setSuggestions([])}
-              onClick={() => setSuggestions([])}
+              style={{ width: '100%' }}
             />
-          )}
-        />
-        <div className="search-button" >
-          <Button variant="contained" color="primary" onClick={() => {
-            search(q)
-          }
-          }>
+            {showSuggestions && suggestions.length > 0 && (
+              <SuggestionList>
+                {suggestions.map((suggestion, index) => (
+                  <SuggestionItem 
+                    key={`suggestion-${index}`}
+                    onClick={() => handleSuggestionClick(suggestion)}
+                  >
+                    {suggestion}
+                  </SuggestionItem>
+                ))}
+              </SuggestionList>
+            )}
+          </div>
+          <SearchButton onClick={() => search(q)}>
             Search
-          </Button>
-        </div>
-      </Box>
-    </div>
+          </SearchButton>
+        </SearchBox>
+      </SearchContainer>
+    </Box>
   );
 }

@@ -1,30 +1,66 @@
 import React from 'react';
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
 
 // React Context for Auth
 import { useAuth } from '../../contexts/AuthContext';
 
+// Import pure MUI isolation styles
+import './MuiAuthIsolation.css';
+
+// Create styled components using MUI's styled API for complete isolation
+const AuthWrapper = styled(Box)(({ theme }) => ({
+  padding: '4px 8px',
+  display: 'flex',
+  alignItems: 'center',
+  fontFamily: theme.typography.fontFamily,
+}));
+
+const UserText = styled(Typography)(({ theme }) => ({
+  color: 'white',
+  fontSize: '0.875rem',
+  fontFamily: theme.typography.fontFamily,
+}));
+
+const AuthButton = styled(Button)(({ theme }) => ({
+  color: 'white',
+  textTransform: 'none',
+  marginLeft: theme.spacing(1),
+  fontFamily: theme.typography.fontFamily,
+  '&:hover': {
+    cursor: 'pointer',
+    textDecoration: 'underline',
+    backgroundColor: 'transparent',
+  },
+}));
+
 export default function AppHeaderAuth() {
   // React Context: User Authentication
   const user = useAuth();
-
-  // Dynamically update auth div based on user context
-  const authElement = document.querySelector('.auth');
-  if (authElement) {
-    // Default sign in
-    let html = '<a href="/login" class="auth-link">Sign In</a>';
-    
-    // User profile and sign out
-    let clientPrincipal = (user && user.clientPrincipal) || null,
-        userDetails     = (clientPrincipal && clientPrincipal.userDetails) || null;
-
-    if (userDetails) {
-      html = `${userDetails} | <a href="/logout" class="auth-link">Sign Out</a>`;
-    }
-
-    authElement.innerHTML = html;
-  }
+  
+  // Extract user details
+  const clientPrincipal = (user && user.clientPrincipal) || null;
+  const userDetails = (clientPrincipal && clientPrincipal.userDetails) || null;
 
   return (
-    <div className="auth"></div>
+    <div className="mui-auth-isolation-wrapper">
+      <AuthWrapper>
+        {userDetails ? (
+          <>
+            <UserText>{userDetails}</UserText>
+            <AuthButton href="/logout">
+              Sign out
+            </AuthButton>
+          </>
+        ) : (
+          <AuthButton href="/login">
+            Sign in
+          </AuthButton>
+        )}
+      </AuthWrapper>
+    </div>
   );
 };

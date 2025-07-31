@@ -1,0 +1,40 @@
+/* MUI SearchBar Component Isolation Layer */
+.mui-searchbar-isolation-wrapper {
+  /* CSS Reset */
+  all: initial;
+  
+  /* Box model */
+  box-sizing: border-box;
+  
+  /* Prevent inheritance from Bootstrap */
+  font-family: inherit;
+  line-height: normal;
+  
+  /* Reset positioning */
+  position: relative;
+  display: block;
+  
+  /* Ensure MUI styles take precedence */
+  & * {
+    box-sizing: border-box;
+  }
+  
+  /* Reset specific MUI elements */
+  & .MuiAutocomplete-root {
+    width: 100%;
+  }
+  
+  & .MuiOutlinedInput-root {
+    border-radius: 4px;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  }
+  
+  & .MuiButtonBase-root {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  }
+  
+  /* Hide the clear button in the autocomplete */
+  & .MuiAutocomplete-endAdornment {
+    display: none;
+  }
+}

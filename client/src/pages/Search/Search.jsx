@@ -2,6 +2,9 @@ import React, { useEffect, useState, Suspense } from 'react';
 import fetchInstance from '../../url-fetch';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useLocation, useNavigate } from "react-router-dom";
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 
 import Results from '../../components/Results/Results';
 import Pager from '../../components/Pager/Pager';
@@ -95,27 +98,30 @@ export default function Search() {
   };
 
   return (
-    <main className="main main--search container-fluid">
-      <div className="row">
-        <div className="search-bar-column col-md-3">
-          <div className="search-bar-column-container">
+    <Container maxWidth={false} component="main" className="main main--search" sx={{ marginTop: 2 }}>
+      <Grid container spacing={2} sx={{ px: 2, marginTop: 2 }}> {/* Added horizontal padding and top margin */}
+        <Grid item xs={12} md={3} className="search-bar-column" sx={{ 
+          padding: '8px 16px 16px 16px',
+          borderRight: '1px solid #f0f0f0'
+        }}>
+          <Box className="search-bar-column-container">
             <SearchBar postSearchHandler={postSearchHandler} query={q} width={false}></SearchBar>
-          </div>
+          </Box>
           <Facets facets={facets} filters={filters} setFilters={updateFilterHandler}></Facets>
-        </div>
-        <div className="search-bar-results">
+        </Grid>
+        <Grid item xs={12} md={9} className="search-bar-results">
           {isLoading ? (
-            <div className="col-md-9">
+            <Box display="flex" justifyContent="center" p={2}>
               <CircularProgress />
-            </div>
+            </Box>
           ) : (
-            <div className="search-results-container">
+            <Box className="search-results-container">
               <Results documents={results} top={top} skip={skip} count={resultCount} query={q}></Results>
               <Pager className="pager-style" currentPage={currentPage} resultCount={resultCount} resultsPerPage={resultsPerPage} onPageChange={handlePageChange}></Pager>
-            </div>
+            </Box>
           )}
-        </div>
-      </div>
-    </main>
+        </Grid>
+      </Grid>
+    </Container>
   );
 }

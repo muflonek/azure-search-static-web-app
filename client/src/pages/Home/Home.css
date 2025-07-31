@@ -19,8 +19,36 @@
     margin: auto auto 0;
     object-fit: contain; /* Ensures the image maintains its aspect ratio */
     max-width: 100%; /* Prevents the image from exceeding the container's width */
+    transition: opacity 0.3s ease-in-out;
 }
 
-.poweredby {
+/* Image loading state styles */
+.logo.loading {
+    opacity: 0.7;
+    filter: blur(2px);
+    background-size: 400% 400%;
+}
+
+.logo.loaded {
+    opacity: 1;
+    filter: none;
+}
+
+.home-search-bar {
     text-align: center;
+    display: block;
+    margin: auto auto 0;
+    object-fit: contain;
+    width:100%;
+    max-width: 100%;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.search-controls-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 1em;
 }

@@ -1,0 +1,35 @@
+/* This file creates a CSS isolation boundary to prevent Bootstrap styles
+   from affecting Material UI components inside the isolation wrapper */
+
+.mui-isolation-wrapper {
+  /* Create a new stacking context */
+  position: relative;
+  z-index: 1;
+  
+  /* Reset common Bootstrap styles that might affect child elements */
+  all: initial;  /* Reset all properties */
+  font-family: inherit; /* Restore font */
+  
+  /* Display properties to ensure proper layout */
+  display: block;
+  width: 100%;
+}
+
+/* Reset Bootstrap styles for common elements */
+.mui-isolation-wrapper ul,
+.mui-isolation-wrapper li,
+.mui-isolation-wrapper button {
+  all: unset;
+  box-sizing: border-box;
+}
+
+/* Restore specific Material UI styles */
+.mui-isolation-wrapper .MuiPagination-root {
+  display: flex;
+}
+
+/* Ensure Material UI's classes work properly */
+.mui-isolation-wrapper .MuiPaginationItem-root {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 0.875rem;
+}
