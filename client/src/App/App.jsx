@@ -2,11 +2,11 @@ import React, {useState, useEffect} from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 // Context for user authentication
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from '../AuthContext';
 
 // App shell components
-import AppHeader from '../components/AppHeader/AppHeader';
-import AppFooter from '../components/AppFooter/AppFooter';
+import AppHeader from '../components/AppHeader';
+import AppFooter from '../components/AppFooter';
 
 // React Router page components
 import Home from '../pages/Home/Home';

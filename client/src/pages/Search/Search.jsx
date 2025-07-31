@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
 import Results from '../../components/Results/Results';
-import Pager from '../../components/Pager/Pager';
+import Pager from '../../components/Pager';
 import Facets from '../../components/Facets/Facets';
 import SearchBar from '../../components/SearchBar/SearchBar';
 
