@@ -62,7 +62,7 @@ export default function Home() {
         <SearchControlsRow>
           <Typography variant="body1" sx={{ textAlign: 'center', width: '100%', marginBottom: '1em' }}>Powered by Azure AI Search</Typography>
           <HomeSearchBar>
-            <SearchBar postSearchHandler={navigateToSearchPage} width="80%"></SearchBar>
+            <SearchBar postSearchHandler={navigateToSearchPage} width="100%"></SearchBar>
           </HomeSearchBar>
         </SearchControlsRow>
       </HomeSearchContainer>

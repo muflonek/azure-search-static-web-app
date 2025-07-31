@@ -38,9 +38,8 @@ export const HomeSearchBar = styled(Box)(() => ({
   textAlign: 'center',
   display: 'block',
   margin: 'auto auto 0',
-  objectFit: 'contain',
   width: '100%',
-  maxWidth: '100%',
+  maxWidth: '800px', // Set a max width for large screens
   paddingRight: '20px',
   paddingLeft: '20px',
 }));
