@@ -9,9 +9,4 @@
     min-height: 40em;
     width: 50%;
 }
-.main--details {
-    min-height: 40em;
-}
-.debug {
-    border: 1px solid red;
-}
+/* Note: .main--details is also defined in Details.css */

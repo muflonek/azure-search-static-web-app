@@ -21,21 +21,9 @@
     .row {
         flex-direction: column;
     }
-
 }
 
-
-.sui-layout-header {
-    background-color: #0078d7;
-    color: #eee;
-}
-.sui-search-box__submit {
-    background: linear-gradient(rgb(60, 226, 102), rgb(34, 151, 57));
-    letter-spacing: 0.1em;
-}
-.sui-search-box__submit:hover {
-    background: linear-gradient(rgb(34, 151, 57), rgb(60, 226, 102));
-}
+/* Removed unused SUI-prefixed classes */
 
 .pager-style {
     margin-left: auto;
@@ -45,7 +33,6 @@
 
 /* Adjust the width of the search-bar to make it shorter */
 .search-bar-column-container {
-
   width: 100%; /* Adjusted width to make it shorter */
   margin: 0 auto; /* Center the search bar */
   margin-top: 10px;

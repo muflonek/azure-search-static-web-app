@@ -12,8 +12,6 @@ import MenuItem from '@mui/material/MenuItem';
 
 import logo from '../../images/microsoft_small.png';
 
-import './AppHeader.css';
-
 export default function AppHeader() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   

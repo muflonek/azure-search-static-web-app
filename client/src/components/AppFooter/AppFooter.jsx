@@ -5,8 +5,6 @@ import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 
-import './AppFooter.css';
-
 export default function AppFooter() {
   const currentYear = new Date().getFullYear();
   
