@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import Box from '@mui/material/Box';
@@ -73,18 +72,7 @@ export default function Pager(props) {
                 margin: 'auto', 
                 display: 'flex', 
                 justifyContent: 'center', 
-                width: '100%',
-                // Reset any Bootstrap styles that might interfere
-                '& ul': {
-                    margin: 0,
-                    padding: 0,
-                    listStyle: 'none'
-                },
-                '& li': {
-                    margin: 0,
-                    padding: 0,
-                    border: 'none'
-                }
+                width: '100%'
             }}
         >
             <StyledPagination
@@ -101,16 +89,3 @@ export default function Pager(props) {
         </Box>
     );
 }
-
-// PropTypes for better documentation and runtime type checking
-Pager.propTypes = {
-    currentPage: PropTypes.number,
-    resultCount: PropTypes.number.isRequired,
-    resultsPerPage: PropTypes.number.isRequired,
-    onPageChange: PropTypes.func.isRequired
-};
-
-// Default props
-Pager.defaultProps = {
-    currentPage: 1
-};

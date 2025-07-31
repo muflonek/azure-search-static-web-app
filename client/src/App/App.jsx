@@ -13,9 +13,6 @@ import Home from '../pages/Home/Home';
 import Search from '../pages/Search/Search';
 import Details from '../pages/Details/Details';
 
-// Bootstrap styles, optionally with jQuery and Popper
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 // Custom app styles
 import './App.css';
 
