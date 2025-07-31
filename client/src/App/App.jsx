@@ -13,8 +13,8 @@ import Home from '../pages/Home/Home';
 import Search from '../pages/Search/Search';
 import Details from '../pages/Details/Details';
 
-// Custom app styles
-import './App.css';
+// Styled components
+import { AppContainer } from './styled';
 
 export default function App() {
   // React Hook: useState with a var name, set function, & default value
@@ -41,7 +41,7 @@ export default function App() {
 
   return (
     <AuthContext.Provider value={user}>
-      <div className="container-fluid app">
+      <AppContainer className="container-fluid">
         <AppHeader />
         <BrowserRouter>
           <Routes>
@@ -52,7 +52,7 @@ export default function App() {
           </Routes>
         </BrowserRouter>
         {<AppFooter />}
-      </div>
+      </AppContainer>
     </AuthContext.Provider>
   );
 }

@@ -4,24 +4,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Result from './Result/Result';
-
-// Styled components for MUI isolation
-const ResultsContainer = styled(Grid)(() => ({
-  display: 'flex',
-  flexFlow: 'row wrap',
-  justifyContent: 'center',
-  width: '100%',
-  margin: 'auto',
-  '& > *': {
-    height: 'auto', // Allow natural height
-    alignSelf: 'stretch' // Make each grid item stretch to fill its cell
-  }
-}));
-
-const ResultsInfo = styled(Typography)(() => ({
-  margin: '1em',
-  fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-}));
+import {
+  ResultsContainer,
+  ResultsInfo
+} from './styled.jsx';
 
 export default function Results(props) {
 

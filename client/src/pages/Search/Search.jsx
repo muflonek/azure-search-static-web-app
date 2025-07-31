@@ -11,7 +11,14 @@ import Pager from '../../components/Pager/Pager';
 import Facets from '../../components/Facets/Facets';
 import SearchBar from '../../components/SearchBar/SearchBar';
 
-import "./Search.css";
+import { 
+  SearchMain, 
+  SearchBarColumn, 
+  SearchBarResults, 
+  SearchBarColumnContainer, 
+  SearchResultsContainer,
+  PagerStyle
+} from './styled';
 
 export default function Search() {
 
@@ -98,27 +105,29 @@ export default function Search() {
   };
 
   return (
-    <Container maxWidth={false} component="main" className="main main--search" sx={{ marginTop: 2 }}>
+    <Container maxWidth={false} component={SearchMain} sx={{ marginTop: 2 }}>
       <Grid container spacing={2} sx={{ px: 2, marginTop: 2 }}> {/* Added horizontal padding and top margin */}
-        <Grid item xs={12} md={3} className="search-bar-column" sx={{ 
+        <Grid item xs={12} md={3} component={SearchBarColumn} sx={{ 
           padding: '8px 16px 16px 16px',
           borderRight: '1px solid #f0f0f0'
         }}>
-          <Box className="search-bar-column-container">
+          <SearchBarColumnContainer>
             <SearchBar postSearchHandler={postSearchHandler} query={q} width={false}></SearchBar>
-          </Box>
+          </SearchBarColumnContainer>
           <Facets facets={facets} filters={filters} setFilters={updateFilterHandler}></Facets>
         </Grid>
-        <Grid item xs={12} md={9} className="search-bar-results">
+        <Grid item xs={12} md={9} component={SearchBarResults}>
           {isLoading ? (
             <Box display="flex" justifyContent="center" p={2}>
               <CircularProgress />
             </Box>
           ) : (
-            <Box className="search-results-container">
+            <SearchResultsContainer>
               <Results documents={results} top={top} skip={skip} count={resultCount} query={q}></Results>
-              <Pager className="pager-style" currentPage={currentPage} resultCount={resultCount} resultsPerPage={resultsPerPage} onPageChange={handlePageChange}></Pager>
-            </Box>
+              <PagerStyle component={Box}>
+                <Pager currentPage={currentPage} resultCount={resultCount} resultsPerPage={resultsPerPage} onPageChange={handlePageChange}></Pager>
+              </PagerStyle>
+            </SearchResultsContainer>
           )}
         </Grid>
       </Grid>

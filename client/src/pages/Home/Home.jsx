@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Typography from '@mui/material/Typography';
 
 import SearchBar from '../../components/SearchBar/SearchBar';
 
-import "./Home.css";
-import "../../pages/Search/Search.css";
+import { HomeSearchContainer, CenterContainer, LogoImage, HomeSearchBar, SearchControlsRow } from './styled';
+import { HomeMain } from '../../App/styled';
 import logo from '../../images/cognitive_search.jpg';
 
 export default function Home() {
@@ -42,12 +43,12 @@ export default function Home() {
   };
 
   return (
-    <div className="center-container">
-    <main className="main main--home">
-      <div className="row home-search">
+    <CenterContainer>
+    <HomeMain>
+      <HomeSearchContainer>
         {/* Add loading="eager" to prioritize image loading and width/height for layout stability */}
-        <img 
-          className={`logo ${imageLoaded ? 'loaded' : 'loading'}`}
+        <LogoImage 
+          isLoaded={imageLoaded ? 'true' : 'false'}
           src={logo} 
           alt="Cognitive Search"
           loading="eager"
@@ -58,12 +59,14 @@ export default function Home() {
         />
         
         {/* New row for poweredby and search bar that takes 80% width */}
-        <div className="row search-controls-row">
-          <p className="poweredby" style={{ textAlign: 'center', width: '100%', marginBottom: '1em' }}>Powered by Azure AI Search</p>
-          <SearchBar className="home-search-bar" postSearchHandler={navigateToSearchPage} width="80%"></SearchBar>
-        </div>
-      </div>
-    </main>
-    </div>
+        <SearchControlsRow>
+          <Typography variant="body1" sx={{ textAlign: 'center', width: '100%', marginBottom: '1em' }}>Powered by Azure AI Search</Typography>
+          <HomeSearchBar>
+            <SearchBar postSearchHandler={navigateToSearchPage} width="80%"></SearchBar>
+          </HomeSearchBar>
+        </SearchControlsRow>
+      </HomeSearchContainer>
+    </HomeMain>
+    </CenterContainer>
   );
 };
