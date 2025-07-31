@@ -2,7 +2,6 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CheckboxFacet from './CheckboxFacet/CheckboxFacet';
-import "./FacetsIsolation.css";
 
 // Styled components using basic HTML elements to reduce bundle size
 const FacetBox = styled('div')(() => ({

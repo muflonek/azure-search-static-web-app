@@ -5,8 +5,6 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Result from './Result/Result';
 
-import "./ResultsIsolation.css";
-
 // Styled components for MUI isolation
 const ResultsContainer = styled(Grid)(() => ({
   display: 'flex',

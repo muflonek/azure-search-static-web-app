@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
-// Import isolation styles instead of regular CSS
-import './FacetIsolation.css';
-
 // Using lightweight styled components instead of MUI components
 const FacetListItem = styled('div')(() => ({
   display: 'flex',

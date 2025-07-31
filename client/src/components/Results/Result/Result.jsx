@@ -2,9 +2,6 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
-// Using direct HTML elements instead of MUI components to reduce bundle size
-import './ResultIsolation.css';
-
 // Styled div instead of Card to reduce bundle size
 const ResultCard = styled('div')(() => ({
   width: '200px',

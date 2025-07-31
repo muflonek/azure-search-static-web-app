@@ -8,10 +8,7 @@ import Paper from '@mui/material/Paper';
 // React Context for Auth
 import { useAuth } from '../../contexts/AuthContext';
 
-// Import pure MUI isolation styles
-import './MuiAuthIsolation.css';
 
-// Create styled components using MUI's styled API for complete isolation
 const AuthWrapper = styled(Box)(({ theme }) => ({
   padding: '4px 8px',
   display: 'flex',
