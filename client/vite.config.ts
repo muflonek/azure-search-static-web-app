@@ -6,7 +6,15 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'build',
-    sourcemap: true
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor': ['react', 'react-dom', 'react-router-dom'],
+          'mui': ['@mui/material', '@mui/icons-material', '@emotion/react', '@emotion/styled']
+        }
+      }
+    }
   },
   server: {
     port: 3000,

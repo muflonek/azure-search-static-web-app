@@ -1,14 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, lazy, Suspense} from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 // App shell components
 import AppHeader from '../components/AppHeader';
 import AppFooter from '../components/AppFooter';
 
-// React Router page components
-import Home from '../pages/Home/Home';
-import Search from '../pages/Search/Search';
-import Details from '../pages/Details/Details';
+// React Router page components - Lazy load routes
+const Home = lazy(() => import('../pages/Home/Home'));
+const Search = lazy(() => import('../pages/Search/Search'));
+const Details = lazy(() => import('../pages/Details/Details'));
 
 // Styled components
 import { AppContainer } from './styled';
@@ -50,16 +50,31 @@ export default function App(): React.ReactElement {
     fetchAuth()
   }, []);
 
+  // Simple loading component
+  const LoadingFallback = () => (
+    <div style={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      height: '50vh', 
+      fontSize: '1.2rem' 
+    }}>
+      Loading...
+    </div>
+  );
+
   return (
       <AppContainer className="container-fluid">
         <AppHeader />
         <BrowserRouter>
-          <Routes>
-            <Route path={`/`} element={<Home />} />
-            <Route path={`/search`} element={<Search />} />
-            <Route path={`/details/:id`} element={<Details />}/>
-            <Route path={`*`} element={<Home />} />
-          </Routes>
+          <Suspense fallback={<LoadingFallback />}>
+            <Routes>
+              <Route path={`/`} element={<Home />} />
+              <Route path={`/search`} element={<Search />} />
+              <Route path={`/details/:id`} element={<Details />}/>
+              <Route path={`*`} element={<Home />} />
+            </Routes>
+          </Suspense>
         </BrowserRouter>
         {<AppFooter />}
       </AppContainer>
