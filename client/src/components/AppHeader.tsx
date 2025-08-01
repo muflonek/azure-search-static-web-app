@@ -98,10 +98,7 @@ export default function AppHeader() {
             </Menu>
           </Box>
           
-          {/* Auth */}
-          {/* <Box>
-            <AppHeaderAuth />
-          </Box> */}
+          {/* Auth functionality removed */}
         </Toolbar>
       </AppBar>
     </div>

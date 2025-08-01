@@ -8,6 +8,9 @@ import {
 
 export default function Result(props: ResultProps) {
   const title = props.document.original_title || '<NO TITLE>'; 
+
+
+  console.log(props.document);
   
   return (
     <Box className="mui-result-isolation-wrapper">

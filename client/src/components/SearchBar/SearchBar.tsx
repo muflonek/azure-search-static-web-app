@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, KeyboardEvent, ChangeEvent } from 'react';
 import Box from '@mui/material/Box';
-import fetchInstance from '../../url-fetch.js';
+import fetchInstance from '../../url-fetch';
 import { SearchBarProps } from '../../types/props';
+import { SuggestRequest, SuggestResponse } from '../../types/api';
 import {
   SearchContainer,
   SearchBox,
@@ -9,25 +10,25 @@ import {
   SearchButton,
   SuggestionList,
   SuggestionItem
-} from './styles.jsx';
+} from './styles';
 
 export default function SearchBar({ postSearchHandler, query, width }: SearchBarProps) {
-  const [q, setQ] = useState(() => query || '');
-  const [suggestions, setSuggestions] = useState([]);
+  const [q, setQ] = useState<string>(() => query || '');
+  const [suggestions, setSuggestions] = useState<string[]>([]);
 
-  const search = (value) => {
+  const search = (value: string): void => {
     postSearchHandler(value);
   };
 
   useEffect(() => {
     if (q) {
-      const body = { q, top: 5, suggester: 'sg' };
+      const body: SuggestRequest = { q, top: 5, suggester: 'sg' };
 
-      fetchInstance('/api/suggest', { body, method: 'POST' })
-      .then(response => {
-        setSuggestions(response.suggestions.map(s => s.text));
+      fetchInstance<SuggestResponse>('/api/suggest', { body, method: 'POST' })
+      .then((response: SuggestResponse) => {
+        setSuggestions(response.suggestions.map((s) => s.text));
       })
-      .catch(error => {
+      .catch((error: Error) => {
         console.log(error);
         setSuggestions([]);
       });
@@ -37,17 +38,17 @@ export default function SearchBar({ postSearchHandler, query, width }: SearchBar
   }, [q]);
 
   // Handle enter key in the search field
-  const handleKeyPress = (event) => {
+  const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter') {
       search(q);
     }
   };
 
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const inputRef = useRef(null);
+  const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
+  const inputRef = useRef<HTMLInputElement>(null);
   
   // Handle selecting suggestion
-  const handleSuggestionClick = (suggestion) => {
+  const handleSuggestionClick = (suggestion: string): void => {
     setQ(suggestion);
     search(suggestion);
     setShowSuggestions(false);
@@ -61,7 +62,7 @@ export default function SearchBar({ postSearchHandler, query, width }: SearchBar
             <SearchInput
               ref={inputRef}
               value={q}
-              onChange={(e) => setQ(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setQ(e.target.value)}
               onFocus={() => setShowSuggestions(true)}
               onBlur={() => {
                 // Delay to allow click on suggestion
@@ -74,7 +75,7 @@ export default function SearchBar({ postSearchHandler, query, width }: SearchBar
             />
             {showSuggestions && suggestions.length > 0 && (
               <SuggestionList>
-                {suggestions.map((suggestion, index) => (
+                {suggestions.map((suggestion: string, index: number) => (
                   <SuggestionItem 
                     key={`suggestion-${index}`}
                     onClick={() => handleSuggestionClick(suggestion)}

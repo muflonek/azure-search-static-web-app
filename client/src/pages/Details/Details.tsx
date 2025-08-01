@@ -6,7 +6,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 
-import fetchInstance from '../../url-fetch.js';
+import fetchInstance from '../../url-fetch';
 import { Document } from '../../types/models';
 
 import {

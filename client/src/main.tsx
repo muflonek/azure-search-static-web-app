@@ -3,9 +3,9 @@ import { createRoot } from 'react-dom/client'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import GlobalStyles from '@mui/material/GlobalStyles'
-import theme from './theme.js'
-import App from './App/App.jsx'
-import { debugStyles } from './debug.js' // Import debug styles
+import theme from './theme'
+import App from './App/App'
+import { debugStyles } from './debug' // Import debug styles
 
 // Define global styles
 const globalStyles = {
@@ -74,8 +74,6 @@ const globalStyles = {
     boxSizing: 'border-box',
   },
 };
-
-console.log('client2');
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

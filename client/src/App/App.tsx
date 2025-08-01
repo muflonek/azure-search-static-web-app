@@ -13,20 +13,34 @@ import Details from '../pages/Details/Details';
 // Styled components
 import { AppContainer } from './styled';
 
-export default function App() {
+// Types
+interface AuthUser {
+  clientPrincipal?: {
+    userId: string;
+    userRoles: string[];
+    claims: Array<{typ: string, val: string}>;
+    identityProvider: string;
+    userDetails: string;
+  };
+}
+
+export default function App(): React.ReactElement {
   // React Hook: useState with a var name, set function, & default value
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<AuthUser>({});
 
   // Fetch authentication API & set user state
-  async function fetchAuth() {
-    const response = await fetch("/.auth/me");
-    if (response) {
-      const contentType = response.headers.get("content-type");
-      if (contentType && contentType.indexOf("application/json") !== -1) {
-        response.json()
-          .then(response => setUser(response))
-          .catch(error => console.error('Error:', error));
+  async function fetchAuth(): Promise<void> {
+    try {
+      const response = await fetch("/.auth/me");
+      if (response.ok) {
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+          const authData: AuthUser = await response.json();
+          setUser(authData);
+        }
       }
+    } catch (error) {
+      console.error('Authentication error:', error);
     }
   }
 

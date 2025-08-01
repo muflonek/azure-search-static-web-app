@@ -1,6 +1,11 @@
 // Types for API requests and responses
 
-import { Document, Facet } from './models.js';
+import { Document, Facet } from './models';
+
+export interface SearchResultDocument {
+  score: number;
+  document: Document;
+}
 
 export interface SearchRequest {
   q: string;
@@ -18,8 +23,8 @@ export interface SuggestRequest {
 
 export interface SearchResponse {
   count: number;
-  facets?: Record<string, Facet[]>;
-  documents: Document[];
+  facets: Record<string, Facet>;
+  searchResults: SearchResultDocument[]; 
   skip?: number;
   top?: number;
 }

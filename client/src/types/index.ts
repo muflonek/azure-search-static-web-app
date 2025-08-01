@@ -2,4 +2,3 @@
 export * from './models';
 export * from './api';
 export * from './props';
-export * from './contexts';

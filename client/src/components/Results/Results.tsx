@@ -4,16 +4,21 @@ import { ResultsProps } from '../../types/props';
 import {
   ResultsContainer,
   ResultsInfo
-} from './styled.jsx';
+} from './styled';
 
 export default function Results(props: ResultsProps) {
 
-  let results = props.documents.map((result, index) => {
+  let results = props.searchResultDocuments.map((result, index) => {
+
+  let book = result?.document;
+ 
     return <Result 
         key={index} 
-        document={result.document}
+        document={book}
       />;
   });
+
+  console.log(results[0]);
 
   // Provide default values for pagination properties
   const skip = props.skip ?? 0;  // Default to 0 if skip is not provided

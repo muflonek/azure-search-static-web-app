@@ -1,10 +1,12 @@
-import { useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import fetchInstance from '../../url-fetch';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useLocation, useNavigate } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import { Facet } from '../../types/models';
+import { SearchResponse, SearchResultDocument } from '../../types/api';
 
 import Results from '../../components/Results/Results';
 import Pager from '../../components/Pager';
@@ -20,27 +22,27 @@ import {
   PagerStyle
 } from './styled';
 
-export default function Search() {
+export default function Search(): React.ReactElement {
 
   let location = useLocation();
   const navigate = useNavigate();
 
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<SearchResultDocument[]>([]);
 
-  const [q, setQ] = useState(new URLSearchParams(location.search).get('q') ?? "*");
+  const [q, setQ] = useState<string>(new URLSearchParams(location.search).get('q') ?? "*");
 
-  const [resultCount, setResultCount] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [resultCount, setResultCount] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [top] = useState<number>(Number(new URLSearchParams(location.search).get('top')) || 8);
   const [skip, setSkip] = useState<number>(Number(new URLSearchParams(location.search).get('skip')) || 0);
-  const [filters, setFilters] = useState([]);
-  const [facets, setFacets] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [filters, setFilters] = useState<string[]>([]);
+  const [facets, setFacets] = useState<Record<string, Facet>>({});
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   let resultsPerPage = top;
 
   // Handle page changes in a controlled manner
-  function handlePageChange(newPage) {
+  function handlePageChange(newPage: number): void {
     setCurrentPage(newPage);
   }
 
@@ -66,15 +68,25 @@ export default function Search() {
     };
 
     
-    fetchInstance('/api/search', { body, method: 'POST' })
-      .then(response => {
-        setResults(response.results);
+    fetchInstance<any>('/api/search', { body, method: 'POST' })
+      .then(apiResponse => {
+        // Map API response to our new interface
+        const response: SearchResponse = {
+          count: apiResponse.count || 0,
+          facets: apiResponse.facets || {},
+          // Map existing results or documents to our new searchResults property
+          searchResults: (apiResponse.results || apiResponse.documents || []) as SearchResultDocument[],
+          skip: apiResponse.skip,
+          top: apiResponse.top
+        };
+        
+        setResults(response.searchResults);
         setFacets(response.facets);
         setResultCount(response.count);
         setIsLoading(false);
       })
       .catch(error => {
-        console.log(error);
+        console.error('Search error:', error);
         setIsLoading(false);
       });
   }, [q, top, skip, filters, currentPage]);
@@ -89,14 +101,14 @@ export default function Search() {
   }, [q]);
 
 
-  let postSearchHandler = (searchTerm) => {
+  let postSearchHandler = (searchTerm: string): void => {
     setQ(searchTerm);
   }
 
 
   // filters should be applied across entire result set, 
   // not just within the current page
-  const updateFilterHandler = (newFilters) => {
+  const updateFilterHandler = (newFilters: string[]): void => {
 
     // Reset paging
     setSkip(0);
@@ -125,7 +137,7 @@ export default function Search() {
             </Box>
           ) : (
             <SearchResultsContainer>
-              <Results documents={results} top={top} skip={skip} count={resultCount} query={q}></Results>
+              <Results searchResultDocuments={results} top={top} skip={skip} count={resultCount} query={q} ></Results>
               <PagerStyle>
                 <Pager currentPage={currentPage} resultCount={resultCount} resultsPerPage={resultsPerPage} onPageChange={handlePageChange}></Pager>
               </PagerStyle>

@@ -1,9 +1,6 @@
 // Types for React component props
 import { Document, Facet } from './models';
-
-export interface AppHeaderAuthProps {
-  isAuthenticated?: boolean;
-}
+import { SearchResultDocument } from './api';
 
 export interface SearchBarProps {
   postSearchHandler: (query: string) => void;
@@ -13,7 +10,7 @@ export interface SearchBarProps {
 
 export interface ResultsProps {
   query?: string;
-  documents: Array<{document: Document}>;
+  searchResultDocuments: SearchResultDocument[];
   count?: number;
   skip?: number;
   top?: number;

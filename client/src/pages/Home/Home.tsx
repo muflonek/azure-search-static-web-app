@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Typography from '@mui/material/Typography';
 
@@ -8,9 +8,9 @@ import { HomeSearchContainer, CenterContainer, LogoImage, HomeSearchBar, SearchC
 import { HomeMain } from '../../App/styled';
 import logo from '../../images/cognitive_search.jpg';
 
-export default function Home() {
+export default function Home(): React.ReactElement {
   const navigate = useNavigate();
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
   
   // Prefetch the search page component when the home page loads
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function Home() {
     const prefetchSearch = () => {
       const link = document.createElement('link');
       link.rel = 'prefetch';
-      link.href = '/src/pages/Search/Search.jsx';
+      link.href = '/src/pages/Search/Search.tsx';
       link.as = 'script';
       document.head.appendChild(link);
     };
@@ -31,14 +31,14 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
   
-  const navigateToSearchPage = (q: string) => {
+  const navigateToSearchPage = (q: string): void => {
     if (!q || q === '') {
       q = '*'
     }
     navigate('/search?q=' + q);
   }
   
-  const handleImageLoad = () => {
+  const handleImageLoad = (): void => {
     setImageLoaded(true);
   };
 
