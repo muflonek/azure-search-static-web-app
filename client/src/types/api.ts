@@ -1,6 +1,6 @@
 // Types for API requests and responses
 
-import { Document, Facet } from './models';
+import { Document, Facet } from './models.js';
 
 export interface SearchRequest {
   q: string;

@@ -1,14 +1,5 @@
 // Types for React component props
-import { ReactNode } from 'react';
 import { Document, Facet } from './models';
-
-export interface AppProps {
-  children?: ReactNode;
-}
-
-export interface AppHeaderProps {
-  isAuthenticated?: boolean;
-}
 
 export interface AppHeaderAuthProps {
   isAuthenticated?: boolean;
@@ -21,8 +12,11 @@ export interface SearchBarProps {
 }
 
 export interface ResultsProps {
+  query?: string;
   documents: Array<{document: Document}>;
   count?: number;
+  skip?: number;
+  top?: number;
 }
 
 export interface ResultProps {

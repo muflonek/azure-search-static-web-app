@@ -1,13 +1,12 @@
-import React from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import { ResultProps } from '../../../types/props';
 import {
   ResultCard,
   ResultImage,
   TitleText
 } from './styled.jsx';
 
-export default function Result(props) {
+export default function Result(props: ResultProps) {
   const title = props.document.original_title || '<NO TITLE>'; 
   
   return (

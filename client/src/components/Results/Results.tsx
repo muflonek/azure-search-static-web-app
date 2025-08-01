@@ -1,15 +1,12 @@
-import React from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
 import Result from './Result/Result';
+import { ResultsProps } from '../../types/props';
 import {
   ResultsContainer,
   ResultsInfo
 } from './styled.jsx';
 
-export default function Results(props) {
+export default function Results(props: ResultsProps) {
 
   let results = props.documents.map((result, index) => {
     return <Result 
@@ -18,13 +15,27 @@ export default function Results(props) {
       />;
   });
 
-  let beginDocNumber = Math.min(props.skip + 1, props.count);
-  let endDocNumber = Math.min(props.skip + props.top, props.count);
+  // Provide default values for pagination properties
+  const skip = props.skip ?? 0;  // Default to 0 if skip is not provided
+  const count = props.count ?? 0; // Default to 0 if count is not provided
+  const top = props.top ?? 8;    // Default to 8 if top is not provided
+
+  // When there are results, show 1-based counting for beginDocNumber
+  // When no results, beginDocNumber should be 0
+  let beginDocNumber = count > 0 ? skip + 1 : 0;
+  
+  // For endDocNumber, take the smaller of (skip + top) or count
+  // This ensures we don't show ranges beyond the actual number of results
+  let endDocNumber = count > 0 ? Math.min(skip + top, count) : 0;
 
   return (
-    <Box className="mui-results-isolation-wrapper">
+    <Box>
       <ResultsInfo variant="body1">
-        Showing {beginDocNumber}-{endDocNumber} of {props.count.toLocaleString()} results for <strong>{props.query}</strong>
+        {count > 0 ? (
+          <>Showing {beginDocNumber}-{endDocNumber} of {count.toLocaleString()} results for <strong>{props.query ?? ""}</strong></>
+        ) : (
+          <>No results found for <strong>{props.query ?? ""}</strong></>
+        )}
       </ResultsInfo>
       <ResultsContainer container spacing={2} justifyContent="center">
         {results}

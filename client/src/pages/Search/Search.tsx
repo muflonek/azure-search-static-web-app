@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState} from 'react';
 import fetchInstance from '../../url-fetch';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useLocation, useNavigate } from "react-router-dom";
@@ -26,11 +26,13 @@ export default function Search() {
   const navigate = useNavigate();
 
   const [results, setResults] = useState([]);
+
+  const [q, setQ] = useState(new URLSearchParams(location.search).get('q') ?? "*");
+
   const [resultCount, setResultCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [q, setQ] = useState(new URLSearchParams(location.search).get('q') ?? "*");
-  const [top] = useState(new URLSearchParams(location.search).get('top') ?? 8);
-  const [skip, setSkip] = useState(new URLSearchParams(location.search).get('skip') ?? 0);
+  const [top] = useState<number>(Number(new URLSearchParams(location.search).get('top')) || 8);
+  const [skip, setSkip] = useState<number>(Number(new URLSearchParams(location.search).get('skip')) || 0);
   const [filters, setFilters] = useState([]);
   const [facets, setFacets] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -112,7 +114,7 @@ export default function Search() {
           borderRight: '1px solid #f0f0f0'
         }}>
           <SearchBarColumnContainer>
-            <SearchBar postSearchHandler={postSearchHandler} query={q} width={false}></SearchBar>
+            <SearchBar postSearchHandler={postSearchHandler} query={q} width={undefined}></SearchBar>
           </SearchBarColumnContainer>
           <Facets facets={facets} filters={filters} setFilters={updateFilterHandler}></Facets>
         </Grid>
@@ -124,7 +126,7 @@ export default function Search() {
           ) : (
             <SearchResultsContainer>
               <Results documents={results} top={top} skip={skip} count={resultCount} query={q}></Results>
-              <PagerStyle component={Box}>
+              <PagerStyle>
                 <Pager currentPage={currentPage} resultCount={resultCount} resultsPerPage={resultsPerPage} onPageChange={handlePageChange}></Pager>
               </PagerStyle>
             </SearchResultsContainer>

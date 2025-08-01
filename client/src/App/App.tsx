@@ -1,9 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-// Context for user authentication
-import { AuthContext } from '../AuthContext';
-
 // App shell components
 import AppHeader from '../components/AppHeader';
 import AppFooter from '../components/AppFooter';
@@ -40,7 +37,6 @@ export default function App() {
   }, []);
 
   return (
-    <AuthContext.Provider value={user}>
       <AppContainer className="container-fluid">
         <AppHeader />
         <BrowserRouter>
@@ -53,6 +49,5 @@ export default function App() {
         </BrowserRouter>
         {<AppFooter />}
       </AppContainer>
-    </AuthContext.Provider>
   );
 }

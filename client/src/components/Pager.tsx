@@ -1,6 +1,4 @@
-import React from 'react';
 import Pagination from '@mui/material/Pagination';
-import PaginationItem from '@mui/material/PaginationItem';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 
@@ -80,7 +78,7 @@ export default function Pager(props) {
                 count={totalPages}
                 variant="outlined"
                 shape="rounded"
-                onChange={(event, newPage) => handlePageChange(newPage)}
+                onChange={(_, newPage) => handlePageChange(newPage)}
                 showFirstButton
                 showLastButton
                 siblingCount={PAGE_WINDOW}

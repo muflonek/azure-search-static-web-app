@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { styled } from '@mui/material/styles';
+import { useState, useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
 import fetchInstance from '../../url-fetch.js';
+import { SearchBarProps } from '../../types/props';
 import {
   SearchContainer,
   SearchBox,
@@ -11,7 +11,7 @@ import {
   SuggestionItem
 } from './styles.jsx';
 
-export default function SearchBar({ postSearchHandler, query, width }) {
+export default function SearchBar({ postSearchHandler, query, width }: SearchBarProps) {
   const [q, setQ] = useState(() => query || '');
   const [suggestions, setSuggestions] = useState([]);
 

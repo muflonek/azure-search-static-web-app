@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import Box from '@mui/material/Box';
 import {
@@ -10,7 +10,7 @@ import {
 } from './styles.jsx';
 
 export default function CheckboxFacet(props) {
-    const [isExpanded, setIsExpanded] = useState(false);
+    const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
     const checkboxes = props.values.map(facetValue => {
         let isSelected = props.selectedFacets.some(facet => facet.value === facetValue.value);

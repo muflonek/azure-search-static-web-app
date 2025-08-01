@@ -6,17 +6,16 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 
-import fetchInstance from '../../url-fetch';
+import fetchInstance from '../../url-fetch.js';
+import { Document } from '../../types/models';
 
 import {
-  DetailsMain,
   TabPanel,
   TabPanelValue,
   CardBody,
   ImageContainer,
   CardTitle,
   CardText,
-  BoxHeader,
   BoxContent,
   DetailsBoxParent,
   DetailsTabBoxHeader,
@@ -24,7 +23,15 @@ import {
 } from './styled';
 
 
-function CustomTabPanel(props) {
+interface CustomTabPanelProps {
+  children?: React.ReactNode;
+  value: number;
+  index: number;
+  component?: React.ElementType;
+  [key: string]: any; // For other props
+}
+
+function CustomTabPanel(props: CustomTabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (
@@ -42,13 +49,13 @@ function CustomTabPanel(props) {
 
 export default function BasicTabs() {
   const { id } = useParams();
-  const [document, setDocument] = useState({});
+  const [document, setDocument] = useState<Document>({} as Document);
   const [value, setValue] = React.useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
-    fetchInstance('/api/lookup', { query: { id } })
+    fetchInstance('/api/lookup', { query: { id: id as string } })
       .then(response => {
         console.log(JSON.stringify(response))
         const doc = response.document;
@@ -62,7 +69,7 @@ export default function BasicTabs() {
 
   }, [id]);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (_, newValue) => {
     setValue(newValue);
   };
 
@@ -90,7 +97,7 @@ export default function BasicTabs() {
           <ImageContainer src={document.image_url} alt="Book cover" />
           <CardText variant="body1">{document.authors?.join('; ')} - {document.original_publication_year}</CardText>
           <CardText variant="body1">ISBN {document.isbn}</CardText>
-          <Rating name="half-rating-read" value={parseInt(document.average_rating)} precision={0.1} readOnly></Rating>
+          <Rating name="half-rating-read" value={document.average_rating ? Number(document.average_rating) : 0} precision={0.1} readOnly></Rating>
           <CardText variant="body1">{document.ratings_count} Ratings</CardText>
         </CardBody>
       </CustomTabPanel>

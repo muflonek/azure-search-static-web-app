@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Typography from '@mui/material/Typography';
 
@@ -31,7 +31,7 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
   
-  const navigateToSearchPage = (q) => {
+  const navigateToSearchPage = (q: string) => {
     if (!q || q === '') {
       q = '*'
     }
@@ -48,7 +48,7 @@ export default function Home() {
       <HomeSearchContainer>
         {/* Add loading="eager" to prioritize image loading and width/height for layout stability */}
         <LogoImage 
-          isLoaded={imageLoaded ? 'true' : 'false'}
+          isLoaded={imageLoaded ? true : false}
           src={logo} 
           alt="Cognitive Search"
           loading="eager"

@@ -77,7 +77,12 @@ const globalStyles = {
 
 console.log('client2');
 
-createRoot(document.getElementById('root')).render(
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+  throw new Error("Root element with id 'root' not found.");
+}
+
+createRoot(rootElement).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />

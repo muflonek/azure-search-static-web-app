@@ -15,7 +15,7 @@ export const CenterContainer = styled(Box)(() => ({
   marginTop: '5em',
 }));
 
-export const LogoImage = styled('img')(({ theme, isLoaded }) => ({
+export const LogoImage = styled('img')<{ isLoaded: boolean }>(({ isLoaded }) => ({
   height: '12em',
   width: 'auto',
   display: 'block',
@@ -23,12 +23,12 @@ export const LogoImage = styled('img')(({ theme, isLoaded }) => ({
   objectFit: 'contain',
   maxWidth: '100%',
   transition: 'opacity 0.3s ease-in-out',
-  ...(isLoaded === 'false' && {
+  ...(!isLoaded && {
     opacity: 0.7,
     filter: 'blur(2px)',
     backgroundSize: '400% 400%',
   }),
-  ...(isLoaded === 'true' && {
+  ...(isLoaded && {
     opacity: 1,
     filter: 'none',
   }),

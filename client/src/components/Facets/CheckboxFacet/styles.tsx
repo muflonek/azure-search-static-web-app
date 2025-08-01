@@ -31,7 +31,7 @@ export const FacetList = styled('ul')(() => ({
 }));
 
 // Custom checkbox component
-export const CustomCheckbox = styled('div')(({ checked }) => ({
+export const CustomCheckbox = styled('div')<{ checked: boolean }>(({ checked }) => ({
   width: '18px',
   height: '18px',
   border: checked ? '2px solid #1976d2' : '2px solid rgba(0, 0, 0, 0.6)',
@@ -53,7 +53,7 @@ export const CustomCheckbox = styled('div')(({ checked }) => ({
 }));
 
 // Lightweight expand/collapse icons
-export const ExpandIcon = ({ expanded }) => (
+export const ExpandIcon = ({ expanded }: { expanded: boolean }) => (
   <div style={{ 
     width: '24px', 
     height: '24px', 
