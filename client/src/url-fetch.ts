@@ -5,14 +5,21 @@ const baseURL = import.meta.env.DEV
 console.log(`baseURL = ${baseURL}`);
 console.log(`Environment: ${import.meta.env.MODE}`);
 
-function buildQueryString(params) {
+function buildQueryString(params: Record<string, string | number | boolean>): string {
     return Object.keys(params)
-        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key].toString())}`)
         .join('&');
 }
 
-async function fetchInstance(url, { query = {}, body = null, headers = {}, method = 'GET' } = {}) {
-    const queryString = buildQueryString(query);
+interface FetchOptions {
+    query?: Record<string, string | number | boolean>;
+    body?: any;
+    headers?: Record<string, string>;
+    method?: string;
+}
+
+async function fetchInstance<T = any>(url: string, { query = {}, body = null, headers = {}, method = 'GET' }: FetchOptions = {}): Promise<T> {
+    const queryString = buildQueryString(query as Record<string, string | number | boolean>);
     // Handle empty baseURL for production (relative URLs)
     const fullUrl = baseURL ? `${baseURL}${url}${queryString ? `?${queryString}` : ''}` : `${url}${queryString ? `?${queryString}` : ''}`;
 
@@ -26,7 +33,7 @@ async function fetchInstance(url, { query = {}, body = null, headers = {}, metho
     });
 
     if (response.ok || (response.status >= 200 && response.status < 400)) {
-        return await response.json();
+        return await response.json() as T;
     } else {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
