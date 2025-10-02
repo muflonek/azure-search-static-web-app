@@ -75,7 +75,7 @@ export default function SearchBar({ postSearchHandler, query, width }) {
             search(q)
           }
           }>
-            Search
+            My Search
           </Button>
         </div>
       </Box>
